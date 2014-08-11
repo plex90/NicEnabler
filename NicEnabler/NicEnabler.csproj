@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="network-ethernet-connected.ico" />
+    <Content Include="License.txt" />
     <None Include="Resources\donate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

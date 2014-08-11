@@ -50,7 +50,7 @@ namespace NicEnabler
         {
             try
             {
-                //Datei auslesen
+                //Read File
                 List<string> lines = new List<string>();
                 using (System.IO.StreamReader file = new System.IO.StreamReader(filePath))
                 {
