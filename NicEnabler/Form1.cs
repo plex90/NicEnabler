@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NicEnabler
 {
     public partial class Form1 : Form
     {
-        List<string> infList = new List<string>();
+        readonly List<string> infList = new List<string>();
         string folderPath;
         public Form1()
         {
@@ -22,9 +16,11 @@ namespace NicEnabler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog objDialog = new FolderBrowserDialog();
-            objDialog.Description = "Please specify folder";
-            objDialog.SelectedPath = Environment.GetEnvironmentVariable("USERPROFILE");
+            var objDialog = new FolderBrowserDialog
+            {
+                Description = "Please specify folder",
+                SelectedPath = Environment.GetEnvironmentVariable("USERPROFILE")
+            };
             DialogResult objResult = objDialog.ShowDialog(this);
             if (objResult == DialogResult.OK)
             {
@@ -54,7 +50,7 @@ namespace NicEnabler
                     GetInfs(d);
                 }
             }
-            catch (System.Exception excpt)
+            catch (Exception excpt)
             {
                 Console.WriteLine(excpt.Message);
             }
@@ -80,7 +76,7 @@ namespace NicEnabler
             if (startedWorkers==finishedWorkers&&ok)
             {
                 //Versuche Setup zu starten
-                string setupFile = System.IO.Path.Combine(folderPath, "Autorun.exe");
+                string setupFile = Path.Combine(folderPath, "Autorun.exe");
                 try
                 {
                     System.Diagnostics.Process.Start(setupFile);
@@ -114,21 +110,39 @@ namespace NicEnabler
             {
                 System.Diagnostics.Process.Start("https://www.betterplace.org");
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start("https://downloadcenter.intel.com/Detail_Desc.aspx?lang=deu&changeLang=true&DwnldID=22283");
+                System.Diagnostics.Process.Start("https://downloadcenter.intel.com/download/22283/Intel-Ethernet-Connections-CD");
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("http://www.howtogeek.com/167723/how-to-disable-driver-signature-verification-on-64-bit-windows-8.1-so-that-you-can-install-unsigned-drivers/");
+            }
+            catch
+            {
+                // ignored
+            }
         }
     }
 }

@@ -1,36 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
+﻿
 namespace NicEnabler
 {
     public class Section
-    { 
-        public string displayname {get;set;}
-        public string section { get; set; }
-        public string deviceid { get; set; }
+    {
+        //public string MD5 { get; set; }
+        public string displayname {get;}
+        public string section { get; }
+        public string deviceid { get; }
         public Section(string line)
         {
-            //MessageBox.Show(line);
-            try
+            string[] split = line.Split('=');
+            if (split.Length >= 2)
             {
-                string[] split = line.Split('=');
                 displayname = split[0].Trim();
                 string[] split2 = split[1].Split(',');
-                section = "=" + split2[0].Trim()+",";
-                deviceid = split2[1].Trim();
-            }
-            catch (Exception ex)
-            { 
+                if (split2.Length >= 2)
+                {
+                    section = "=" + split2[0].Trim() + ",";
+                    deviceid = split2[1].Trim();
+                }
             }
         }
 
         public bool Valid()
         {
-            return (displayname != null && section != null && deviceid != null);
+            if (displayname != null && section != null && deviceid != null)
+            {
+                return true;
+            }
+            return false;
         }
+
+        //private string GetMD5Hash()
+        //{
+        //    string TextToHash = displayname + section + deviceid;
+
+        //    MD5 md5 = new MD5CryptoServiceProvider();
+        //    byte[] textToHash = Encoding.Default.GetBytes(TextToHash);
+        //    byte[] result = md5.ComputeHash(textToHash);
+
+        //    return BitConverter.ToString(result);
+        //}
     }
 }

@@ -2,50 +2,47 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NicEnabler
 {
     class BwFileModify
     {
-        Form1 form1;
-        BackgroundWorker worker;
-        string filePath;
+        readonly Form1 form1;
+        readonly BackgroundWorker worker;
+        readonly string filePath;
         bool ok = true;
         public BwFileModify(Form1 _form1, string _filePath)
         {
-            this.filePath = _filePath;
-            this.form1 = _form1;
+            filePath = _filePath;
+            form1 = _form1;
 
-            worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
+            worker = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
 
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
 
         public void StartWorker()
         {
-            if (this.worker!=null)
-            {
-                this.worker.RunWorkerAsync();
-            }
+            worker?.RunWorkerAsync();
         }
 
         public void StopWorker()
         {
-            if (this.worker!=null&&worker.IsBusy)
+            if (worker!=null && worker.IsBusy)
             {
-                this.worker.CancelAsync();
+                worker.CancelAsync();
             }
         }
 
         List<string> listSectionNames = new List<string>();
-        List<List<Section>> listSections = new List<List<Section>>();
+        readonly List<List<Section>> listSections = new List<List<Section>>();
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -70,6 +67,25 @@ namespace NicEnabler
                         break;
                     }
                 }
+
+                bool inControlFlag = false;
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    if (!inControlFlag && lines[i].Trim().Equals("[ControlFlags]"))
+                    {
+                        inControlFlag = true;
+                    }
+                    //Nächste leerzeile
+                    else if (lines[i].Trim().Length == 0 && inControlFlag)
+                    {
+                        break;
+                    }
+                    else if (inControlFlag)
+                    {
+                        lines[i] = ";" + lines[i];
+                    }
+                }
+
 
                 foreach (string fullsectionname in listSectionNames)
                 {
@@ -99,23 +115,16 @@ namespace NicEnabler
                     }
                 }
 
-                List<Section> allSections = new List<Section>();
-                foreach (List<Section> listSec in listSections)
-                {
-                    foreach (Section sec in listSec)
-                    {
-                        allSections.Add(sec);
-                    }
-                }
-
-                //Mergen
-                for (int i = 0; i < listSections.Count; i++)
+                // ### Alle validen Elemente in 'allSections' schreiben
+                List<Section> allSections = listSections.SelectMany(listSec => listSec).ToList();
+                // ### Mergen --- Doppelte vermeiden
+                foreach (List<Section> t in listSections)
                 {
                     foreach (Section sec in allSections)
                     {
-                        if (!listSections[i].Contains(sec))
+                        if (!t.Contains(sec))
                         {
-                            listSections[i].Add(sec);
+                            t.Add(sec);
                         }
                     }
                 }
