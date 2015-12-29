@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NicEnabler
 {
     public partial class Form1 : Form
     {
-        readonly List<string> infList = new List<string>();
+        List<string> infList = new List<string>();
         string folderPath;
         public Form1()
         {
             InitializeComponent();
+            Text += "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,8 +40,11 @@ namespace NicEnabler
         
         private void GetInfs(string folderPath)
         {
+            infList.Clear();
+            string[] files = Directory.GetFiles(folderPath, "*.inf", SearchOption.AllDirectories);
+            infList = files.ToList();
             //Find and Add inf files to stack
-            try
+            /*try
             {
                 foreach (string d in Directory.GetDirectories(folderPath))
                 {
@@ -53,7 +58,7 @@ namespace NicEnabler
             catch (Exception excpt)
             {
                 Console.WriteLine(excpt.Message);
-            }
+            }*/
         }
 
         private void AddToBwStack(string filePath)
@@ -77,11 +82,11 @@ namespace NicEnabler
             {
                 //Versuche Setup zu starten
                 string setupFile = Path.Combine(folderPath, "Autorun.exe");
-                try
+                if (File.Exists(setupFile))
                 {
                     System.Diagnostics.Process.Start(setupFile);
                 }
-                catch
+                else
                 {
                     MessageBox.Show("all done, please go to step 3", "congratulations", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

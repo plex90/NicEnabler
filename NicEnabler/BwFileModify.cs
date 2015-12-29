@@ -24,7 +24,6 @@ namespace NicEnabler
             };
 
             worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
 
@@ -47,18 +46,13 @@ namespace NicEnabler
         {
             try
             {
-                //Read File
-                List<string> lines = new List<string>();
-                using (System.IO.StreamReader file = new System.IO.StreamReader(filePath))
+                //  Read File
+                List<string> lines;
+                if (!Helpers.ReadInfFile(filePath, out lines))
                 {
-                    string line;
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        lines.Add(line);
-                    }
+                    return;
                 }
-
-                //
+                // Find Manufacturer Section to Find OS Speciefic Sections
                 for (int i = 0; i < lines.Count; i++)
                 {
                     if (lines[i].Trim().Equals("[Manufacturer]"))
@@ -67,26 +61,7 @@ namespace NicEnabler
                         break;
                     }
                 }
-
-                bool inControlFlag = false;
-                for (int i = 0; i < lines.Count; i++)
-                {
-                    if (!inControlFlag && lines[i].Trim().Equals("[ControlFlags]"))
-                    {
-                        inControlFlag = true;
-                    }
-                    //Nächste leerzeile
-                    else if (lines[i].Trim().Length == 0 && inControlFlag)
-                    {
-                        break;
-                    }
-                    else if (inControlFlag)
-                    {
-                        lines[i] = ";" + lines[i];
-                    }
-                }
-
-
+                //
                 foreach (string fullsectionname in listSectionNames)
                 {
                     bool inSection = false;
@@ -117,19 +92,15 @@ namespace NicEnabler
 
                 // ### Alle validen Elemente in 'allSections' schreiben
                 List<Section> allSections = listSections.SelectMany(listSec => listSec).ToList();
-                // ### Mergen --- Doppelte vermeiden
-                foreach (List<Section> t in listSections)
+                List<string> allSectionLines = new List<string>();
+                foreach (Section section in allSections)
                 {
-                    foreach (Section sec in allSections)
-                    {
-                        if (!t.Contains(sec))
-                        {
-                            t.Add(sec);
-                        }
-                    }
+                    allSectionLines.Add(section.GetLine());
                 }
+                allSectionLines = allSectionLines.Distinct().ToList();
 
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(System.IO.Path.Combine(filePath)))
+
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath))
                 {
                     int currentSectionnr = -1;
 
@@ -139,9 +110,9 @@ namespace NicEnabler
                         {
                             currentSectionnr++;
                             file.WriteLine(listSectionNames[currentSectionnr]);
-                            foreach (Section x in listSections[currentSectionnr])
+                            foreach (string x in allSectionLines)
                             {
-                                file.WriteLine(x.displayname + x.section + x.deviceid);
+                                file.WriteLine(x);
                             }
                         }
                         else
@@ -159,11 +130,6 @@ namespace NicEnabler
                 MessageBox.Show(ex.ToString());
                 ok = false;
             }
-        }
-
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
         }
 
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

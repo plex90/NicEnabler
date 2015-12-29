@@ -235,7 +235,7 @@
             this.MinimumSize = new System.Drawing.Size(516, 361);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Intel NIC Enabler v0.11";
+            this.Text = "Intel NIC Enabler ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

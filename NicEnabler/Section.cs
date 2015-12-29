@@ -1,9 +1,13 @@
 ﻿
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
 namespace NicEnabler
 {
     public class Section
     {
-        //public string MD5 { get; set; }
+        public string md5;
         public string displayname {get;}
         public string section { get; }
         public string deviceid { get; }
@@ -20,6 +24,7 @@ namespace NicEnabler
                     deviceid = split2[1].Trim();
                 }
             }
+            md5 = GetMD5Hash();
         }
 
         public bool Valid()
@@ -31,15 +36,20 @@ namespace NicEnabler
             return false;
         }
 
-        //private string GetMD5Hash()
-        //{
-        //    string TextToHash = displayname + section + deviceid;
+        public string GetLine()
+        {
+            return displayname + section + deviceid;
+        }
 
-        //    MD5 md5 = new MD5CryptoServiceProvider();
-        //    byte[] textToHash = Encoding.Default.GetBytes(TextToHash);
-        //    byte[] result = md5.ComputeHash(textToHash);
+        private string GetMD5Hash()
+        {
+            string TextToHash = displayname + section + deviceid;
 
-        //    return BitConverter.ToString(result);
-        //}
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] textToHash = Encoding.Default.GetBytes(TextToHash);
+            byte[] result = md5.ComputeHash(textToHash);
+
+            return BitConverter.ToString(result);
+        }
     }
 }
