@@ -1,5 +1,5 @@
 # NicEnabler
-Easily use your Intel iXXX-v Ethernet Controller on Windows Server Platforms.
+Easily use your Intel iXXX-v Ethernet Controller on Windows Server Platforms. NicEnabler breaks the Driver Limitations, the only Reason that you cannot use your Intel NIC out-of-the-box on Windows Servers is that Intel want that you buy a Server NIC. After the successful Installation your NIC works as expected and rock solid!
 
 ```
 Intel i217-V
@@ -8,7 +8,7 @@ Intel i219-V
 ```
 
 ### Step 1
-Disable the Windows Driver Signature Verification
+Disable the Windows Driver Signature Verification (temporary!)
 * [Step1 - Follow this Tutorial](https://www.howtogeek.com/167723/how-to-disable-driver-signature-verification-on-64-bit-windows-8.1-so-that-you-can-install-unsigned-drivers/) - This sould work for Windows Server 2012R2 / 2016 too
 ### Step 2
 If you know which Controller you have you can Download the device specific Driver, if not you can Download the complete Driver Package.
