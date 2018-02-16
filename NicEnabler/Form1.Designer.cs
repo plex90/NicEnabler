@@ -45,10 +45,13 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -66,12 +69,12 @@
             this.groupBox1.Controls.Add(this.linkLabel2);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 86);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(476, 59);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Step 1";
+            this.groupBox1.Text = "Step 2";
             // 
             // linkLabel2
             // 
@@ -105,20 +108,21 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.progressBar1);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 77);
+            this.groupBox2.Location = new System.Drawing.Point(12, 151);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(476, 80);
+            this.groupBox2.Size = new System.Drawing.Size(476, 108);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Step 2";
+            this.groupBox2.Text = "Step 3";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 63);
+            this.label8.Location = new System.Drawing.Point(7, 50);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(213, 13);
             this.label8.TabIndex = 2;
@@ -139,7 +143,7 @@
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(13, 164);
+            this.groupBox3.Location = new System.Drawing.Point(13, 265);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(475, 106);
             this.groupBox3.TabIndex = 3;
@@ -186,7 +190,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(308, 299);
+            this.linkLabel1.Location = new System.Drawing.Point(308, 400);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(55, 13);
             this.linkLabel1.TabIndex = 4;
@@ -197,7 +201,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::NicEnabler.Properties.Resources.donate;
-            this.pictureBox1.Location = new System.Drawing.Point(369, 276);
+            this.pictureBox1.Location = new System.Drawing.Point(369, 377);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(119, 36);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -210,7 +214,7 @@
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel3.LinkColor = System.Drawing.Color.Red;
-            this.linkLabel3.Location = new System.Drawing.Point(19, 276);
+            this.linkLabel3.Location = new System.Drawing.Point(10, 26);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(337, 16);
             this.linkLabel3.TabIndex = 8;
@@ -218,12 +222,29 @@
             this.linkLabel3.Text = "Disable \'Driver Signature Enforcement\' First! Click Here.";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.linkLabel3);
+            this.groupBox4.Location = new System.Drawing.Point(12, 22);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(476, 59);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Step 1";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(11, 70);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(459, 23);
+            this.progressBar1.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 322);
-            this.Controls.Add(this.linkLabel3);
+            this.ClientSize = new System.Drawing.Size(500, 424);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.groupBox3);
@@ -231,7 +252,6 @@
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(516, 361);
             this.MinimumSize = new System.Drawing.Size(516, 361);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -244,6 +264,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,6 +289,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
