@@ -27,13 +27,13 @@ namespace NicEnabler
             if (objResult == DialogResult.OK)
             {
                 folderPath = objDialog.SelectedPath;
-            }
-            GetInfs(folderPath);
-            if (infList != null && infList.Count > 0)
-            {
-                foreach (string infFile in infList)
+                GetInfs(folderPath);
+                if (infList != null && infList.Count > 0)
                 {
-                    AddToBwStack(infFile);
+                    foreach (string infFile in infList)
+                    {
+                        AddToBwStack(infFile);
+                    }
                 }
             }
         }
