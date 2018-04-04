@@ -89,11 +89,11 @@ namespace NicEnabler
         {
             try
             {
-                System.Diagnostics.Process.Start("mailto:plex94180@gmail.com");
+                System.Diagnostics.Process.Start("mailto:plex1290@gmail.com");
             }
             catch
             {
-                MessageBox.Show("No email client installed. Use webmail etc: plex94180@gmail.com", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No email client installed. Use webmail etc: plex1290@gmail.com", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
